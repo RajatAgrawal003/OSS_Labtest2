@@ -1,0 +1,58 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.impute import SimpleImputer
+
+
+
+california_housing = fetch_california_housing()
+data = pd.DataFrame(california_housing.data, columns=california_housing.feature_names)
+data['MedHouseVal'] = california_housing.target  
+
+print("Featur Name", data.columns)
+print("Shaprof dataset:", data.shape)
+
+numerical_features = data.select_dtypes(include=[np.number]).columns
+categorical_features = data.select_dtypes(exclude=[np.number]).columns
+
+print("no of numerical features:", len(numerical_features))
+print("no of categorical features:", len(categorical_features))
+
+
+
+
+sns.lineplot(data=data, x='AveRooms', y='MedHouseVal')
+plt.title('HousePrice vs Avg Rooms')
+plt.xlabel('Avg no of Rooms')
+plt.ylabel('Median house prices')
+plt.show()
+
+
+
+X = data_imputed.drop(columns=['MedHouseVal'])
+y = data_imputed['MedHouseVal']
+
+X_train, X_test, y_train, y_test = train_test_split
+
+lr_model = LinearRegression()
+lr_model.fit(X_train, y_train)
+y_pred_lr = lr_model.predict(X_test)
+
+svm_model = SVR(kernel='linear')
+svm_model.fit(X_train, y_train)
+y_pred_svm = svm_model.predict(X_test)
+
+
+
+print("Linear Reg performance:")
+print("Accuracy:", accuracy_score(y_test_binary, y_pred_lr_binary))
+print("Precision:", precision_score(y_test_binary, y_pred_lr_binary))
+print("Recall:", recall_score(y_test_binary, y_pred_lr_binary))
+print("F1 Score:", f1_score(y_test_binary, y_pred_lr_binary))
+
+
